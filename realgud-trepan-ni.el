@@ -1,10 +1,10 @@
 ;;; realgud-trepan-ni.el --- Realgud front-end to trepan-ni -*- lexical-binding: t -*-
 
-;; Author: Rocky Bernstein
+;; Author: Rocky Bernstein <rocky@gnu.org>
 ;; Version: 1.0.0
 ;; Package-Type: multi
-;; Package-Requires: ((load-relative "1.2") (realgud "1.4.5") (cl-lib "0.5") (emacs "25"))
-;; URL: http://github.com/realgud/realgud-node-inspect
+;; Package-Requires: ((load-relative "1.2") (realgud "1.4.5") (emacs "25"))
+;; URL: http://github.com/realgud/realgud-trepan-ni
 ;; Compatibility: GNU Emacs 25.x
 
 ;; Copyright (C) 2015, 2016, 2019 Free Software Foundation, Inc
