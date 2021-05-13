@@ -1,5 +1,9 @@
 include $(top_srcdir)/common.mk
 
+lisp_files = $(wildcard *.el)
+lisp_LISP = $(lisp_files)
+EXTRA_DIST = $(lisp_files)
+
 PHONY=check test all check-elget test-elget help
 
 #: overall help on running the make targets
@@ -34,33 +38,36 @@ help:
 test: check
 
 #: same thing as "check-elget"
-test-elget: check-elget
+test-cask: check-cask
 
 test_files := $(wildcard test-*.el)
 
 CHECK_FILES = $(notdir $(test_files:.el=.run))
-EL_GET_CHECK_FILES = $(notdir $(test_files:.el=.elrun))
+
+cask_test_files := test-trepan-ni.inspect.el
+
+EL_GET_CHECK_FILES = $(notdir $(cask_test_files:.el=.elrun))
 
 #: Run all tests
 check: $(CHECK_FILES)
 
-#: Run all tests via el-get
-check-elget: $(EL_GET_CHECK_FILES)
+#: Run all tests via cask
+check-cask: $(EL_GET_CHECK_FILES)
 
 #: Run all tests with minimum verbosity
 check-short:
 	$(MAKE) check 2>&1  | ruby ../make-check-filter.rb
 
 #: Run all tests with minimum verbosity via el-get
-check-short-elget:
-	$(MAKE) check-elget 2>&1  | ruby ../make-check-filter.rb
+check-short-cask:
+	$(MAKE) check-cask 2>&1  | ruby ../make-check-filter.rb
 
 test-%.run:
 	(cd $(top_srcdir)/test && EMACSLOADPATH=$(EMACSLOADPATH) $(EMACS) --batch --no-site-file --no-splash --load $(@:.run=.el))
 
-#: Run tests using el-get to specify external Lisp dependencies
+#: Run tests using cask to specify external Lisp dependencies
 test-%.elrun:
-	(cd $(top_srcdir)/test && EMACSLOADPATH=$(EMACSLOADPATH) $(EMACS) --batch --no-site-file --no-splash --load ../el-get-install.el --load $(@:.elrun=.el))
+	(cd $(top_srcdir)/test && $(EMACS) --batch --no-site-file --no-splash --load ../cask-install.el --load $(@:.elrun=.el))
 
 install-lispLISP: $(lisp_LISP) $(ELCFILES)
 
